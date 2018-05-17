@@ -1,0 +1,21 @@
+{
+  "name": "ridibooks/store-lib",
+  "description": "계정팀 UserBook 동기화 커맨드 API 클라이언트",
+  "type": "library",
+  "authors": [
+    {
+      "name": "양희찬",
+      "email": "heechan@ridi.com"
+    }
+  ],
+  "license": "proprietary",
+  "autoload": {
+    "psr-4": {
+      "Ridibooks\\Store\\Library\\": "src/Ridibooks/Store/Library"
+    }
+  },
+  "require": {
+    "php": "^7.1",
+    "guzzlehttp/guzzle": "^6.3"
+  }
+}
