@@ -26,6 +26,11 @@ class DeleteCommandPayload implements \JsonSerializable
     public function __construct(int $u_idx, string $type, int $revision, int $priority, array $b_ids)
     {
         $this->u_idx = $u_idx;
+        $type = strtolower($type);
+        // insert의 경우 API에서는 update로 처리한다.
+        if ($type === 'insert') {
+            $type = 'update';
+        }
         $this->type = $type;
         $this->revision = $revision;
         $this->priority = $priority;
