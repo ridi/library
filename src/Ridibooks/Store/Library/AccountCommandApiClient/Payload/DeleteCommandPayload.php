@@ -3,46 +3,20 @@ declare(strict_types=1);
 
 namespace Ridibooks\Store\Library\AccountCommandApiClient\Payload;
 
-class DeleteCommandPayload implements \JsonSerializable
+class DeleteCommandPayload extends BaseCommandPayload
 {
-    /** @var int */
-    private $u_idx;
-    /** @var string */
-    private $type;
-    /** @var int */
-    private $revision;
-    /** @var int */
-    private $priority;
-    /** @var string[] */
-    private $b_ids;
+    public const METHOD = 'delete';
 
     /**
+     * DeleteCommandPayload constructor.
      * @param int $u_idx
-     * @param string $type
      * @param int $revision
      * @param int $priority
      * @param string[] $b_ids
      */
-    public function __construct(int $u_idx, string $type, int $revision, int $priority, array $b_ids)
+    public function __construct(int $u_idx, int $revision, int $priority, array $b_ids)
     {
-        $this->u_idx = $u_idx;
-        $type = strtolower($type);
-        // insert의 경우 API에서는 update로 처리한다.
-        if ($type === 'insert') {
-            $type = 'update';
-        }
-        $this->type = $type;
-        $this->revision = $revision;
-        $this->priority = $priority;
-        $this->b_ids = $b_ids;
-    }
-
-    /**
-     * @return int
-     */
-    public function getUidx(): int
-    {
-        return $this->u_idx;
+        parent::__construct($u_idx, self::METHOD, $revision, $priority, $b_ids, null);
     }
 
     /**
@@ -55,11 +29,11 @@ class DeleteCommandPayload implements \JsonSerializable
     public function jsonSerialize(): array
     {
         $json = [
-            'u_idx' => $this->u_idx,
-            'type' => $this->type,
-            'revision' => $this->revision,
-            'priority' => $this->priority,
-            'b_ids' => $this->b_ids
+            'u_idx' => $this->getUIdx(),
+            'type' => $this->getType(),
+            'revision' => $this->getRevision(),
+            'priority' => $this->getPriority(),
+            'b_ids' => $this->getBIds()
         ];
         return $json;
     }

@@ -5,8 +5,7 @@ namespace Ridibooks\Store\Library\AccountCommandApiClient;
 
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Response;
-use Ridibooks\Store\Library\AccountCommandApiClient\Payload\DeleteCommandPayload;
-use Ridibooks\Store\Library\AccountCommandApiClient\Payload\UpdateCommandPayload;
+use Ridibooks\Store\Library\AccountCommandApiClient\Payload\BaseCommandPayload;
 
 class Client
 {
@@ -26,13 +25,12 @@ class Client
     }
 
     /**
-     * @param DeleteCommandPayload $payload
+     * @param BaseCommandPayload $payload
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function sendDeleteCommandAsync(DeleteCommandPayload $payload)
+    public function sendCommandAsync(BaseCommandPayload $payload)
     {
-        $u_idx = $payload->getUidx();
-        $promise = $this->client->requestAsync('POST', "/command/delete/{$u_idx}/", [
+        $promise = $this->client->requestAsync('POST', $payload->getRequestUri(), [
             'json' => $payload,
         ]);
 
@@ -40,37 +38,12 @@ class Client
     }
 
     /**
-     * @param DeleteCommandPayload $payload
+     * @param BaseCommandPayload $payload
      * @return Response
      */
-    public function sendDeleteCommand(DeleteCommandPayload $payload)
+    public function sendCommand(BaseCommandPayload $payload)
     {
-        $promise = $this->sendDeleteCommandAsync($payload);
-
-        return $promise->wait();
-    }
-
-    /**
-     * @param UpdateCommandPayload $payload
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function sendUpdateCommandAsync(UpdateCommandPayload $payload)
-    {
-        $u_idx = $payload->getUidx();
-        $promise = $this->client->requestAsync('POST', "/command/update/{$u_idx}/", [
-            'json' => $payload,
-        ]);
-
-        return $promise;
-    }
-
-    /**
-     * @param UpdateCommandPayload $payload
-     * @return Response
-     */
-    public function sendUpdateCommand(UpdateCommandPayload $payload)
-    {
-        $promise = $this->sendUpdateCommandAsync($payload);
+        $promise = $this->sendCommandAsync($payload);
 
         return $promise->wait();
     }
