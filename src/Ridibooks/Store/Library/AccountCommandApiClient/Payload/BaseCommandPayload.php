@@ -52,7 +52,7 @@ abstract class BaseCommandPayload implements \JsonSerializable
      */
     public function getRequestUri(): string
     {
-        return "/command/{$this->type}/{$this->u_idx}/";
+        return "/items/{$this->type}/{$this->u_idx}/";
     }
 
     /**

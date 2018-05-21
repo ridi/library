@@ -35,10 +35,6 @@ class Book implements \JsonSerializable
     /**
      * @var bool
      */
-    private $is_hard_deleted;
-    /**
-     * @var bool
-     */
     private $is_deleted;
 
 
@@ -59,7 +55,6 @@ class Book implements \JsonSerializable
         \DateTime $purchase_date,
         bool $is_canceled,
         bool $is_user_deleted,
-        bool $is_hard_deleted,
         bool $is_deleted
     ) {
         $timezone = new \DateTimeZone('Asia/Seoul');
@@ -69,7 +64,6 @@ class Book implements \JsonSerializable
         $this->purchase_date = $purchase_date->setTimezone($timezone);
         $this->is_canceled = $is_canceled;
         $this->is_user_deleted = $is_user_deleted;
-        $this->is_hard_deleted = $is_hard_deleted;
         $this->is_deleted = $is_deleted;
     }
 
@@ -82,7 +76,6 @@ class Book implements \JsonSerializable
             "purchase_date" => $this->purchase_date->format(\DATE_ATOM),
             "is_canceled" => $this->is_canceled,
             "is_user_deleted" => $this->is_user_deleted,
-            "is_hard_deleted" => $this->is_hard_deleted,
             "is_deleted" => $this->is_deleted
         ];
 
