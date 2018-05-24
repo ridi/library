@@ -9,6 +9,9 @@ class UpdateCommandPayload extends BaseCommandPayload
 {
     public const METHOD = 'update';
 
+    /** @var Book[] */
+    private $books;
+
     /**
      * UpdateCommandPayload constructor.
      * @param int $u_idx
@@ -18,8 +21,18 @@ class UpdateCommandPayload extends BaseCommandPayload
      */
     public function __construct(int $u_idx, int $revision, int $priority, array $books)
     {
-        parent::__construct($u_idx, self::METHOD, $revision, $priority, null, $books);
+        parent::__construct($u_idx, self::METHOD, $revision, $priority);
+        $this->books = $books;
     }
+
+    /**
+     * @return Book[]
+     */
+    public function getBooks(): array
+    {
+        return $this->books;
+    }
+
     /**
      * Specify data which should be serialized to JSON
      * @link http://php.net/manual/en/jsonserializable.jsonserialize.php

@@ -4,11 +4,13 @@ declare(strict_types=1);
 namespace Ridibooks\Store\Library\AccountCommandApiClient;
 
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Response;
 use Ridibooks\Store\Library\AccountCommandApiClient\Payload\BaseCommandPayload;
 
 class Client
 {
+    private const DEFAULT_ACCOUNT_SERVER_URI = 'https://library-api.ridibooks.com';
     /** @var Client */
     private $client;
 
@@ -18,17 +20,17 @@ class Client
      */
     public function __construct(array $config = [])
     {
-        if (!array_key_exists('base_uri', $config)) {
-            $config['base_uri'] = 'https://library-api.ridibooks.com';
+        if (!isset($config['base_uri'])) {
+            $config['base_uri'] = self::DEFAULT_ACCOUNT_SERVER_URI;
         }
         $this->client = new GuzzleClient($config);
     }
 
     /**
      * @param BaseCommandPayload $payload
-     * @return \GuzzleHttp\Promise\PromiseInterface
+     * @return PromiseInterface
      */
-    public function sendCommandAsync(BaseCommandPayload $payload)
+    public function sendCommandAsync(BaseCommandPayload $payload): PromiseInterface
     {
         $promise = $this->client->requestAsync('POST', $payload->getRequestUri(), [
             'json' => $payload,
@@ -41,7 +43,7 @@ class Client
      * @param BaseCommandPayload $payload
      * @return Response
      */
-    public function sendCommand(BaseCommandPayload $payload)
+    public function sendCommand(BaseCommandPayload $payload): Response
     {
         $promise = $this->sendCommandAsync($payload);
 

@@ -45,7 +45,6 @@ class Book implements \JsonSerializable
      * @param \DateTime $purchase_date
      * @param bool $is_canceled
      * @param bool $is_user_deleted
-     * @param bool $is_hard_deleted
      * @param bool $is_deleted
      */
     public function __construct(
@@ -67,7 +66,10 @@ class Book implements \JsonSerializable
         $this->is_deleted = $is_deleted;
     }
 
-    public function jsonSerialize()
+    /**
+     * @return array
+     */
+    public function jsonSerialize(): array
     {
         $json = [
             "b_id" => $this->b_id,

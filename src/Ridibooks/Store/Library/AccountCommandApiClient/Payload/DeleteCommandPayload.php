@@ -7,6 +7,9 @@ class DeleteCommandPayload extends BaseCommandPayload
 {
     public const METHOD = 'delete';
 
+    /** @var string[] */
+    private $b_ids;
+
     /**
      * DeleteCommandPayload constructor.
      * @param int $u_idx
@@ -16,7 +19,16 @@ class DeleteCommandPayload extends BaseCommandPayload
      */
     public function __construct(int $u_idx, int $revision, int $priority, array $b_ids)
     {
-        parent::__construct($u_idx, self::METHOD, $revision, $priority, $b_ids, null);
+        parent::__construct($u_idx, self::METHOD, $revision, $priority);
+        $this->b_ids = $b_ids;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getBIds(): array
+    {
+        return $this->b_ids;
     }
 
     /**
@@ -29,7 +41,7 @@ class DeleteCommandPayload extends BaseCommandPayload
     public function jsonSerialize(): array
     {
         $json = [
-            'u_idx' => $this->getUIdx(),
+            'u_idx' => $this->getUidx(),
             'type' => $this->getType(),
             'revision' => $this->getRevision(),
             'priority' => $this->getPriority(),

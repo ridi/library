@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Ridibooks\Store\Library\AccountCommandApiClient\Payload;
 
-use Ridibooks\Store\Library\AccountCommandApiClient\Book;
-
 abstract class BaseCommandPayload implements \JsonSerializable
 {
     /** @var int */
@@ -15,27 +13,19 @@ abstract class BaseCommandPayload implements \JsonSerializable
     private $revision;
     /** @var int */
     private $priority;
-    /** @var string[]|null */
-    private $b_ids;
-    /** @var Book[]|null */
-    private $books;
 
     /**
      * @param int $u_idx
      * @param string $type
      * @param int $revision
      * @param int $priority
-     * @param string[] $b_ids
-     * @param Book[]|null $books
      */
-    public function __construct(int $u_idx, string $type, int $revision, int $priority, ?array $b_ids, ?array $books)
+    public function __construct(int $u_idx, string $type, int $revision, int $priority)
     {
         $this->u_idx = $u_idx;
         $this->type = $type;
         $this->revision = $revision;
         $this->priority = $priority;
-        $this->b_ids = $b_ids;
-        $this->books = $books;
     }
 
     /**
@@ -58,7 +48,7 @@ abstract class BaseCommandPayload implements \JsonSerializable
     /**
      * @return int
      */
-    public function getUIdx(): int
+    public function getUidx(): int
     {
         return $this->u_idx;
     }
@@ -86,21 +76,4 @@ abstract class BaseCommandPayload implements \JsonSerializable
     {
         return $this->priority;
     }
-
-    /**
-     * @return null|string[]
-     */
-    public function getBIds(): ?array
-    {
-        return $this->b_ids;
-    }
-
-    /**
-     * @return null|Book[]
-     */
-    public function getBooks(): ?array
-    {
-        return $this->books;
-    }
-
 }
