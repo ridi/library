@@ -5,7 +5,7 @@ namespace Ridibooks\Store\Library\AccountCommandApiClient;
 
 class Book implements \JsonSerializable
 {
-    const FORMAT_STRING = DATE_ATOM;
+    const FORMAT_STRING = DATE_RFC3339;
     /**
      * @var string
      */
