@@ -8,7 +8,7 @@ phpcs:
   image: ridibooks/store-php-test:7.1
   stage: test
   script:
-    - composer install --dev
+    - composer install
     - vendor/bin/phpcs --standard=ruleset.xml
   cache:
     key: composer
