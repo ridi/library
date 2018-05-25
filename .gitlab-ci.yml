@@ -1,6 +1,9 @@
 stages:
   - test
 
+variables:
+  COMPOSER_HOME: $CI_PROJECT_DIR/.composer
+
 phpcs:
   image: ridibooks/store-php-test:7.1
   stage: test
