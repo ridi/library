@@ -1,15 +1,6 @@
 stages:
   - test
 
-variables:
-  AWS_DEFAULT_REGION: ap-northeast-2
-
-build:
-  image: ridibooks/gitlab-ci-docker-compose:latest
-  stage: build
-  script:
-    - TAG=$CI_COMMIT_SHA docker-compose -f common.yml build
-
 phpcs:
   image: ridibooks/store-php-test:7.1
   stage: test
