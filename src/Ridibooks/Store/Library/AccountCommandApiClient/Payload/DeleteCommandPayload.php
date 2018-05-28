@@ -42,11 +42,18 @@ class DeleteCommandPayload extends BaseCommandPayload
     {
         $json = [
             'u_idx' => $this->getUidx(),
-            'type' => $this->getType(),
             'revision' => $this->getRevision(),
             'priority' => $this->getPriority(),
             'b_ids' => $this->getBIds()
         ];
         return $json;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
+    {
+        return 'DELETE';
     }
 }

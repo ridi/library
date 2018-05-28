@@ -32,9 +32,11 @@ class Client
      */
     public function sendCommandAsync(BaseCommandPayload $payload): PromiseInterface
     {
-        $promise = $this->client->requestAsync('POST', $payload->getRequestUri(), [
-            'json' => $payload,
-        ]);
+        $promise = $this->client->requestAsync(
+            $payload->getRequestMethod(),
+            $payload->getRequestUri(),
+            ['json' => $payload,]
+        );
 
         return $promise;
     }

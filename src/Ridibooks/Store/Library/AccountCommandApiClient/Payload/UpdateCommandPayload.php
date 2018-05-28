@@ -44,7 +44,6 @@ class UpdateCommandPayload extends BaseCommandPayload
     {
         $json = [
             'u_idx' => $this->getUidx(),
-            'type' => $this->getType(),
             'revision' => $this->getRevision(),
             'priority' => $this->getPriority(),
             'books' => []
@@ -53,5 +52,13 @@ class UpdateCommandPayload extends BaseCommandPayload
             $json['books'][] = $book->jsonSerialize();
         }
         return $json;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
+    {
+        return 'PUT';
     }
 }

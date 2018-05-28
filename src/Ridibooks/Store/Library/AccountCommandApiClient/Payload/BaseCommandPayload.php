@@ -36,13 +36,18 @@ abstract class BaseCommandPayload implements \JsonSerializable
      * @since 5.4.0
      */
     abstract public function jsonSerialize(): array;
+    
+    /**
+     * @return string
+     */
+    abstract public function getRequestMethod(): string;
 
     /**
      * @return string
      */
     public function getRequestUri(): string
     {
-        return "/items/{$this->type}/{$this->u_idx}/";
+        return "/commands/items/";
     }
 
     /**
