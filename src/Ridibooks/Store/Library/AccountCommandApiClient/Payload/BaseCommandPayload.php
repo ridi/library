@@ -14,7 +14,7 @@ abstract class BaseCommandPayload implements \JsonSerializable
     private $revision;
     /** @var int */
     private $priority;
-    /** @var string */
+    /** @var string|null */
     private $response_type;
 
     /**
