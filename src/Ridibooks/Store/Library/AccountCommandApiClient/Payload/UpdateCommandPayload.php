@@ -51,8 +51,8 @@ class UpdateCommandPayload extends BaseCommandPayload
         foreach ($this->getBooks() as $book) {
             $json['books'][] = $book->jsonSerialize();
         }
-        if (!is_null($this->getResponseType())) {
-            $json['response_type'] = $this->getResponseType();
+        if (!is_null($this->getResponseFormat())) {
+            $json['response_format'] = $this->getResponseFormat();
         }
         return $json;
     }

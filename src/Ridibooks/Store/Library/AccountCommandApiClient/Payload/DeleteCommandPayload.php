@@ -46,8 +46,8 @@ class DeleteCommandPayload extends BaseCommandPayload
             'priority' => $this->getPriority(),
             'b_ids' => $this->getBIds()
         ];
-        if (!is_null($this->getResponseType())) {
-            $json['response_type'] = $this->getResponseType();
+        if (!is_null($this->getResponseFormat())) {
+            $json['response_formant'] = $this->getResponseFormat();
         }
         return $json;
     }
