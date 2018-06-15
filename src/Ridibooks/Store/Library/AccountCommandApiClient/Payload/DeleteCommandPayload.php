@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Ridibooks\Store\Library\AccountCommandApiClient\Payload;
 
-class DeleteCommandPayload extends BaseCommandPayload
+class DeleteCommandPayload extends CommandPayload
 {
     private const METHOD = 'delete';
 

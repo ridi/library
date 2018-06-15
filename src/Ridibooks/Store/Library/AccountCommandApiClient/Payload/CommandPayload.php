@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace Ridibooks\Store\Library\AccountCommandApiClient\Payload;
 
-abstract class BaseCommandPayload implements \JsonSerializable
+use Ridibooks\Store\Library\BasePayload;
+
+abstract class CommandPayload extends BasePayload
 {
     private const RESPONSE_FORMAT_BIDS = 'b_ids';
 
@@ -37,20 +39,6 @@ abstract class BaseCommandPayload implements \JsonSerializable
     {
         $this->response_format = self::RESPONSE_FORMAT_BIDS;
     }
-
-    /**
-     * Specify data which should be serialized to JSON
-     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return mixed data which can be serialized by <b>json_encode</b>,
-     * which is a value of any type other than a resource.
-     * @since 5.4.0
-     */
-    abstract public function jsonSerialize(): array;
-    
-    /**
-     * @return string
-     */
-    abstract public function getRequestMethod(): string;
 
     /**
      * @return string

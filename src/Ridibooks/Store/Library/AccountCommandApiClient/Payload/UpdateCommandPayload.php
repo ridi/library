@@ -5,7 +5,7 @@ namespace Ridibooks\Store\Library\AccountCommandApiClient\Payload;
 
 use Ridibooks\Store\Library\AccountCommandApiClient\Book;
 
-class UpdateCommandPayload extends BaseCommandPayload
+class UpdateCommandPayload extends CommandPayload
 {
     private const METHOD = 'update';
 

@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace Ridibooks\Store\Library\AccountCommandApiClient\Payload;
 
-class BulkStatusPayload implements \JsonSerializable
+use Ridibooks\Store\Library\BasePayload;
+
+class BulkStatusPayload extends BasePayload
 {
     /** @var int[] */
     private $queue_ids;
