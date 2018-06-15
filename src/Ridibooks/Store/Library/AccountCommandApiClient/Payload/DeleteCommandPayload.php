@@ -5,7 +5,7 @@ namespace Ridibooks\Store\Library\AccountCommandApiClient\Payload;
 
 class DeleteCommandPayload extends BaseCommandPayload
 {
-    public const METHOD = 'delete';
+    private const METHOD = 'delete';
 
     /** @var string[] */
     private $b_ids;
@@ -46,6 +46,9 @@ class DeleteCommandPayload extends BaseCommandPayload
             'priority' => $this->getPriority(),
             'b_ids' => $this->getBIds()
         ];
+        if (!is_null($this->getResponseType())) {
+            $json['response_type'] = $this->getResponseType();
+        }
         return $json;
     }
 

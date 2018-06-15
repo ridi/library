@@ -5,6 +5,7 @@ namespace Ridibooks\Store\Library\AccountCommandApiClient\Payload;
 
 abstract class BaseCommandPayload implements \JsonSerializable
 {
+    private const RESPONSE_TYPE_BIDS = 'b_ids';
     /** @var int */
     private $u_idx;
     /** @var string */
@@ -13,6 +14,8 @@ abstract class BaseCommandPayload implements \JsonSerializable
     private $revision;
     /** @var int */
     private $priority;
+    /** @var string */
+    private $response_type;
 
     /**
      * @param int $u_idx
@@ -26,6 +29,12 @@ abstract class BaseCommandPayload implements \JsonSerializable
         $this->type = $type;
         $this->revision = $revision;
         $this->priority = $priority;
+        $this->response_type = null;
+    }
+
+    public function setResponseTypeBids()
+    {
+        $this->response_type = self::RESPONSE_TYPE_BIDS;
     }
 
     /**
@@ -80,5 +89,13 @@ abstract class BaseCommandPayload implements \JsonSerializable
     public function getPriority(): int
     {
         return $this->priority;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResponseType(): string
+    {
+        return $this->response_type;
     }
 }
