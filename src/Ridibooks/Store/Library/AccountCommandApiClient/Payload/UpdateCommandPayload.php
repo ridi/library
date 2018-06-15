@@ -7,7 +7,7 @@ use Ridibooks\Store\Library\AccountCommandApiClient\Book;
 
 class UpdateCommandPayload extends BaseCommandPayload
 {
-    public const METHOD = 'update';
+    private const METHOD = 'update';
 
     /** @var Book[] */
     private $books;
@@ -50,6 +50,9 @@ class UpdateCommandPayload extends BaseCommandPayload
         ];
         foreach ($this->getBooks() as $book) {
             $json['books'][] = $book->jsonSerialize();
+        }
+        if (!is_null($this->getResponseType())) {
+            $json['response_type'] = $this->getResponseType();
         }
         return $json;
     }
