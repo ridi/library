@@ -7,8 +7,6 @@ use Ridibooks\Store\Library\AccountCommandApiClient\LibraryItemUpdateExpiration;
 
 class UpdateExpirationCommandPayload extends CommandPayload
 {
-    private const METHOD = 'update';
-
     /** @var LibraryItemUpdateExpiration[] */
     private $books;
 
@@ -20,8 +18,21 @@ class UpdateExpirationCommandPayload extends CommandPayload
      */
     public function __construct(int $u_idx, int $revision, int $priority, array $books)
     {
-        parent::__construct($u_idx, self::METHOD, $revision, $priority);
+        parent::__construct($u_idx, $revision, $priority);
         $this->books = $books;
+    }
+
+    public function getType(): string
+    {
+        return 'update';
+    }
+
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
+    {
+        return 'PUT';
     }
 
     /**
@@ -41,13 +52,5 @@ class UpdateExpirationCommandPayload extends CommandPayload
         }
 
         return $json;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRequestMethod(): string
-    {
-        return 'PUT';
     }
 }

@@ -59,13 +59,13 @@ class LibraryItemFull implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            "b_id" => $this->b_id,
-            "service_type" => $this->service_type,
-            "expire_date" => $this->expire_date->format(DATE_ATOM),
-            "purchase_date" => $this->purchase_date->format(DATE_ATOM),
-            "is_canceled" => $this->is_canceled,
-            "is_user_deleted" => $this->is_user_deleted,
-            "is_deleted" => $this->is_deleted
+            'b_id' => $this->b_id,
+            'service_type' => $this->service_type,
+            'expire_date' => $this->expire_date->format(DATE_ATOM),
+            'purchase_date' => $this->purchase_date->format(DATE_ATOM),
+            'is_canceled' => $this->is_canceled,
+            'is_user_deleted' => $this->is_user_deleted,
+            'is_deleted' => $this->is_deleted
         ];
     }
 }

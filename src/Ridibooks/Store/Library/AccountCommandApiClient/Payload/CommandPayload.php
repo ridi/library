@@ -11,8 +11,6 @@ abstract class CommandPayload extends BasePayload
 
     /** @var int */
     private $u_idx;
-    /** @var string */
-    private $type;
     /** @var int */
     private $revision;
     /** @var int */
@@ -22,18 +20,21 @@ abstract class CommandPayload extends BasePayload
 
     /**
      * @param int $u_idx
-     * @param string $type
      * @param int $revision
      * @param int $priority
      */
-    public function __construct(int $u_idx, string $type, int $revision, int $priority)
+    public function __construct(int $u_idx, int $revision, int $priority)
     {
         $this->u_idx = $u_idx;
-        $this->type = $type;
         $this->revision = $revision;
         $this->priority = $priority;
         $this->response_format = null;
     }
+
+    /**
+     * @return string
+     */
+    abstract public function getType(): string;
 
     public function setResponseTypeBids()
     {
@@ -45,7 +46,7 @@ abstract class CommandPayload extends BasePayload
      */
     public function getRequestUri(): string
     {
-        return "/commands/items/";
+        return '/commands/items/';
     }
 
     /**
@@ -54,14 +55,6 @@ abstract class CommandPayload extends BasePayload
     public function getUidx(): int
     {
         return $this->u_idx;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType(): string
-    {
-        return $this->type;
     }
 
     /**

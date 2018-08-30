@@ -5,13 +5,10 @@ namespace Ridibooks\Store\Library\AccountCommandApiClient\Payload;
 
 class DeleteCommandPayload extends CommandPayload
 {
-    private const METHOD = 'delete';
-
     /** @var string[] */
     private $b_ids;
 
     /**
-     * DeleteCommandPayload constructor.
      * @param int $u_idx
      * @param int $revision
      * @param int $priority
@@ -19,8 +16,24 @@ class DeleteCommandPayload extends CommandPayload
      */
     public function __construct(int $u_idx, int $revision, int $priority, array $b_ids)
     {
-        parent::__construct($u_idx, self::METHOD, $revision, $priority);
+        parent::__construct($u_idx, $revision, $priority);
         $this->b_ids = $b_ids;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return 'delete';
+    }
+
+    /**
+     * @return string
+     */
+    public function getRequestMethod(): string
+    {
+        return 'DELETE';
     }
 
     /**
@@ -32,11 +45,7 @@ class DeleteCommandPayload extends CommandPayload
     }
 
     /**
-     * Specify data which should be serialized to JSON
-     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return mixed data which can be serialized by <b>json_encode</b>,
-     * which is a value of any type other than a resource.
-     * @since 5.4.0
+     * @return array
      */
     public function jsonSerialize(): array
     {
@@ -50,13 +59,5 @@ class DeleteCommandPayload extends CommandPayload
             $json['response_formant'] = $this->getResponseFormat();
         }
         return $json;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRequestMethod(): string
-    {
-        return 'DELETE';
     }
 }
