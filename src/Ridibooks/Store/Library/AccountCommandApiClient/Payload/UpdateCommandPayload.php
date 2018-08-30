@@ -3,21 +3,20 @@ declare(strict_types=1);
 
 namespace Ridibooks\Store\Library\AccountCommandApiClient\Payload;
 
-use Ridibooks\Store\Library\AccountCommandApiClient\Book;
+use Ridibooks\Store\Library\AccountCommandApiClient\LibraryItemFull;
 
 class UpdateCommandPayload extends CommandPayload
 {
     private const METHOD = 'update';
 
-    /** @var Book[] */
+    /** @var LibraryItemFull[] */
     private $books;
 
     /**
-     * UpdateCommandPayload constructor.
      * @param int $u_idx
      * @param int $revision
      * @param int $priority
-     * @param Book[] $books
+     * @param LibraryItemFull[] $books
      */
     public function __construct(int $u_idx, int $revision, int $priority, array $books)
     {
@@ -26,7 +25,7 @@ class UpdateCommandPayload extends CommandPayload
     }
 
     /**
-     * @return Book[]
+     * @return LibraryItemFull[]
      */
     public function getBooks(): array
     {
@@ -46,14 +45,13 @@ class UpdateCommandPayload extends CommandPayload
             'u_idx' => $this->getUidx(),
             'revision' => $this->getRevision(),
             'priority' => $this->getPriority(),
-            'books' => []
+            'books' => array_map('json_encode', $this->getBooks())
         ];
-        foreach ($this->getBooks() as $book) {
-            $json['books'][] = $book->jsonSerialize();
-        }
-        if (!is_null($this->getResponseFormat())) {
+
+        if ($this->getResponseFormat() !== null) {
             $json['response_format'] = $this->getResponseFormat();
         }
+
         return $json;
     }
 
