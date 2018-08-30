@@ -3,67 +3,32 @@ declare(strict_types=1);
 
 namespace Ridibooks\Store\Library\AccountCommandApiClient;
 
-class LibraryItemFull implements \JsonSerializable
+class LibraryItemUpdateExpiration implements \JsonSerializable
 {
-    const FORMAT_STRING = DATE_RFC3339;
-    /**
-     * @var string
-     */
+    /** @var string */
     private $b_id;
-    /**
-     * @var string
-     */
+
+    /** @var bool */
+    private $by_user;
+
+    /** @var string */
     private $service_type;
-    /**
-     * @var \DateTime
-     */
-    private $expire_date;
-    /**
-     * @var \DateTime
-     */
-    private $purchase_date;
-    /**
-     * @var bool
-     */
-    private $is_canceled;
 
-    /**
-     * @var bool
-     */
-    private $is_user_deleted;
-
-    /**
-     * @var bool
-     */
-    private $is_deleted;
-
+    /** @var \DateTime */
+    private $expiration_date;
 
     /**
      * @param string $b_id
+     * @param bool $by_user
      * @param string $service_type
-     * @param \DateTime $expire_date
-     * @param \DateTime $purchase_date
-     * @param bool $is_canceled
-     * @param bool $is_user_deleted
-     * @param bool $is_deleted
+     * @param \DateTime $expiration_date
      */
-    public function __construct(
-        string $b_id,
-        string $service_type,
-        \DateTime $expire_date,
-        \DateTime $purchase_date,
-        bool $is_canceled,
-        bool $is_user_deleted,
-        bool $is_deleted
-    ) {
-        $timezone = new \DateTimeZone('Asia/Seoul');
+    public function __construct(string $b_id, bool $by_user, string $service_type, \DateTime $expiration_date)
+    {
         $this->b_id = $b_id;
+        $this->by_user = $by_user;
         $this->service_type = $service_type;
-        $this->expire_date = $expire_date->setTimezone($timezone);
-        $this->purchase_date = $purchase_date->setTimezone($timezone);
-        $this->is_canceled = $is_canceled;
-        $this->is_user_deleted = $is_user_deleted;
-        $this->is_deleted = $is_deleted;
+        $this->expiration_date = $expiration_date->setTimezone(new \DateTimeZone('Asia/Seoul'));
     }
 
     /**
@@ -71,16 +36,11 @@ class LibraryItemFull implements \JsonSerializable
      */
     public function jsonSerialize(): array
     {
-        $json = [
-            "b_id" => $this->b_id,
-            "service_type" => $this->service_type,
-            "expire_date" => $this->expire_date->format(DATE_RFC3339),
-            "purchase_date" => $this->purchase_date->format(DATE_RFC3339),
-            "is_canceled" => $this->is_canceled,
-            "is_user_deleted" => $this->is_user_deleted,
-            "is_deleted" => $this->is_deleted
+        return [
+            'b_id' => $this->b_id,
+            'by_user' => $this->by_user,
+            'service_type' => $this->service_type,
+            'expire_date' => $this->expiration_date->format(DATE_ATOM)
         ];
-
-        return $json;
     }
 }
