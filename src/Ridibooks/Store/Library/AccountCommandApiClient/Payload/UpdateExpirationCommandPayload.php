@@ -22,6 +22,9 @@ class UpdateExpirationCommandPayload extends CommandPayload
         $this->books = $books;
     }
 
+    /**
+     * @return string
+     */
     public function getType(): string
     {
         return 'update';
