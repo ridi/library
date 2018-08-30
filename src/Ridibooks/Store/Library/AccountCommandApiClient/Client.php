@@ -15,8 +15,9 @@ class Client
     private $client;
 
     /**
-     * @param array $config
      * @see GuzzleClient
+     * @param array $config
+     * @throws \InvalidArgumentException
      */
     public function __construct(array $config = [])
     {
@@ -44,6 +45,7 @@ class Client
     /**
      * @param BasePayload $payload
      * @return Response
+     * @throws \LogicException
      */
     public function sendCommand(BasePayload $payload): Response
     {
