@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Ridibooks\Store\Library\AccountCommandApiClient\Payload;
 
-use Ridibooks\Store\Library\BasePayload;
-
 class BulkStatusPayload extends BasePayload
 {
     /** @var int[] */

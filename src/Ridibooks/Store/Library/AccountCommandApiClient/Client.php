@@ -6,7 +6,7 @@ namespace Ridibooks\Store\Library\AccountCommandApiClient;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Response;
-use Ridibooks\Store\Library\BasePayload;
+use Ridibooks\Store\Library\AccountCommandApiClient\Payload\BasePayload;
 
 class Client
 {
