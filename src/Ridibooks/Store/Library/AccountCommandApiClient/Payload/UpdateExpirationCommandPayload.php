@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Ridibooks\Store\Library\AccountCommandApiClient\Payload;
 
-use Ridibooks\Store\Library\AccountCommandApiClient\LibraryItemUpdateExpiration;
+use Ridibooks\Store\Library\AccountCommandApiClient\Model\LibraryItemUpdateExpiration;
 
 class UpdateExpirationCommandPayload extends CommandPayload
 {

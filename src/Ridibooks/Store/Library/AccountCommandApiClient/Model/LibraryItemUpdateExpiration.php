@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Ridibooks\Store\Library\AccountCommandApiClient;
+namespace Ridibooks\Store\Library\AccountCommandApiClient\Model;
 
 class LibraryItemUpdateExpiration implements \JsonSerializable
 {

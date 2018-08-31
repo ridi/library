@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Ridibooks\Store\Library\AccountCommandApiClient\Payload;
 
-use Ridibooks\Store\Library\AccountCommandApiClient\LibraryItemFull;
+use Ridibooks\Store\Library\AccountCommandApiClient\Model\LibraryItemFull;
 
 class UpdateCommandPayload extends CommandPayload
 {
