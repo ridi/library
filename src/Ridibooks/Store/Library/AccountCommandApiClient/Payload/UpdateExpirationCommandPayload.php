@@ -47,7 +47,12 @@ class UpdateExpirationCommandPayload extends CommandPayload
             'u_idx' => $this->getUidx(),
             'revision' => $this->getRevision(),
             'priority' => $this->getPriority(),
-            'books' => array_map('json_encode', $this->books)
+            'books' => array_map(
+                function (LibraryItemUpdateExpiration $book): array {
+                    return $book->jsonSerialize();
+                },
+                $this->books
+            )
         ];
 
         if ($this->getResponseFormat() !== null) {

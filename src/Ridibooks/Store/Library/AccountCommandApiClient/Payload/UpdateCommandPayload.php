@@ -59,7 +59,12 @@ class UpdateCommandPayload extends CommandPayload
             'u_idx' => $this->getUidx(),
             'revision' => $this->getRevision(),
             'priority' => $this->getPriority(),
-            'books' => array_map('json_encode', $this->getBooks())
+            'books' => array_map(
+                function (LibraryItemFull $book): array {
+                    return $book->jsonSerialize();
+                },
+                $this->getBooks()
+            )
         ];
 
         if ($this->getResponseFormat() !== null) {
