@@ -39,6 +39,7 @@ class UpdateCommandPayload extends CommandPayload
     }
 
     /**
+     * @deprecated
      * @return LibraryItemFull[]
      */
     public function getBooks(): array
