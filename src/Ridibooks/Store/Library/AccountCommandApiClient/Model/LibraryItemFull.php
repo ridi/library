@@ -10,6 +10,7 @@ class LibraryItemFull implements \JsonSerializable
 
     /** @var string */
     private $service_type;
+
     /** @var \DateTime */
     private $expire_date;
 
