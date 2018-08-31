@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Ridibooks\Store\Library\AccountCommandApiClient\Payload;
 
+use Ridibooks\Store\Library\BasePayload;
+
 abstract class CommandPayload extends BasePayload
 {
     private const RESPONSE_FORMAT_BIDS = 'b_ids';
