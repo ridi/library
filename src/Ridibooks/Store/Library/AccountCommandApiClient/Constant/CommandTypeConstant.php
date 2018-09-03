@@ -8,7 +8,7 @@ class CommandTypeConstant
     // Type
     public const INSERT = 'INSERT';
     public const UPDATE = 'UPDATE';
-    public const UPDATE_EXPIRATION = 'TYPE_UPDATE_EXPIRATION';
+    public const UPDATE_EXPIRATION = 'UPDATE_EXPIRATION';
     public const DELETE = 'DELETE';
 
     public const AVAILABLE = [
