@@ -19,6 +19,7 @@ class BulkStatusPayload extends BasePayload
     }
 
     /**
+     * @deprecated
      * @return int[]
      */
     public function getQueueIds(): array
@@ -31,11 +32,7 @@ class BulkStatusPayload extends BasePayload
      */
     public function jsonSerialize(): array
     {
-        $json = [
-            'queue_ids' => $this->getQueueIds()
-        ];
-        
-        return $json;
+        return ['queue_ids' => $this->queue_ids];
     }
 
     /**
@@ -43,7 +40,7 @@ class BulkStatusPayload extends BasePayload
      */
     public function getRequestUri(): string
     {
-        return "/commands/items/queue/bulk/status";
+        return '/commands/items/queue/bulk/status';
     }
 
     /**
