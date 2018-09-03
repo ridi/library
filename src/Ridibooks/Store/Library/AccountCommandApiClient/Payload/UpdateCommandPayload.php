@@ -60,7 +60,7 @@ class UpdateCommandPayload extends CommandPayload
                 function (LibraryItemFull $book): array {
                     return $book->jsonSerialize();
                 },
-                $this->getBooks()
+                $this->books
             )
         ];
 
