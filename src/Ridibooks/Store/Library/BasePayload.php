@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace Ridibooks\Store\Library;
 
-use Ridibooks\Store\Library\AccountCommandApiClient\Payload\BasePayload as NewBasePayload;
+use Ridibooks\Store\Library\AccountCommandApiClient\Payload\Payload;
 
 /**
- * @deprecated Use Ridibooks\Store\Library\AccountCommandApiClient\Payload\BasePayload
+ * @deprecated Use Ridibooks\Store\Library\AccountCommandApiClient\Payload\Payload
  */
-abstract class BasePayload extends NewBasePayload
+abstract class BasePayload extends Payload
 {
 }
