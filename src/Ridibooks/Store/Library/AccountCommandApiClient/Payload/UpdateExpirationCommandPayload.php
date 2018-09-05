@@ -3,18 +3,18 @@ declare(strict_types=1);
 
 namespace Ridibooks\Store\Library\AccountCommandApiClient\Payload;
 
-use Ridibooks\Store\Library\AccountCommandApiClient\Model\LibraryItemFull;
+use Ridibooks\Store\Library\AccountCommandApiClient\Model\LibraryItemUpdateExpiration;
 
-class UpdateCommandPayload extends CommandPayload
+class UpdateExpirationCommandPayload extends CommandPayload
 {
-    /** @var LibraryItemFull[] */
+    /** @var LibraryItemUpdateExpiration[] */
     private $books;
 
     /**
      * @param int $u_idx
      * @param int $revision
      * @param int $priority
-     * @param LibraryItemFull[] $books
+     * @param LibraryItemUpdateExpiration[] $books
      */
     public function __construct(int $u_idx, int $revision, int $priority, array $books)
     {
@@ -39,15 +39,6 @@ class UpdateCommandPayload extends CommandPayload
     }
 
     /**
-     * @deprecated
-     * @return LibraryItemFull[]
-     */
-    public function getBooks(): array
-    {
-        return $this->books;
-    }
-
-    /**
      * @return array
      */
     public function jsonSerialize(): array
@@ -57,7 +48,7 @@ class UpdateCommandPayload extends CommandPayload
             'revision' => $this->getRevision(),
             'priority' => $this->getPriority(),
             'books' => array_map(
-                function (LibraryItemFull $book): array {
+                function (LibraryItemUpdateExpiration $book): array {
                     return $book->jsonSerialize();
                 },
                 $this->books
