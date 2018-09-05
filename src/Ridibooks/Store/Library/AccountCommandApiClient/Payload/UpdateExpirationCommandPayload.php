@@ -33,6 +33,14 @@ class UpdateExpirationCommandPayload extends CommandPayload
     /**
      * @return string
      */
+    public function getRequestUri(): string
+    {
+        return '/commands/items/expiration/';
+    }
+
+    /**
+     * @return string
+     */
     public function getRequestMethod(): string
     {
         return 'PUT';
