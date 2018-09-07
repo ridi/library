@@ -7,6 +7,8 @@ use Ridibooks\Store\Library\AccountCommandApiClient\Model\LibraryItemFull;
 
 class UpdateCommandPayload extends CommandPayload
 {
+    protected const REQUEST_METHOD = 'PUT';
+
     /** @var LibraryItemFull[] */
     private $books;
 
@@ -29,14 +31,6 @@ class UpdateCommandPayload extends CommandPayload
     public function getType(): string
     {
         return 'update';
-    }
-
-    /**
-     * @return string
-     */
-    public function getRequestMethod(): string
-    {
-        return 'PUT';
     }
 
     /**

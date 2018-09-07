@@ -7,6 +7,8 @@ use Ridibooks\Store\Library\BasePayload;
 
 class BulkStatusPayload extends BasePayload
 {
+    protected const REQUEST_METHOD = 'POST';
+
     /** @var int[] */
     private $queue_ids;
 
@@ -41,13 +43,5 @@ class BulkStatusPayload extends BasePayload
     public function getRequestUri(): string
     {
         return '/commands/items/queue/bulk/status';
-    }
-
-    /**
-     * @return string
-     */
-    public function getRequestMethod(): string
-    {
-        return 'POST';
     }
 }

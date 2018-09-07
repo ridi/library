@@ -8,6 +8,8 @@ namespace Ridibooks\Store\Library\AccountCommandApiClient\Payload;
  */
 abstract class Payload implements \JsonSerializable
 {
+    protected const REQUEST_METHOD = 'GET';
+
     /**
      * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
      * @return array
@@ -17,10 +19,13 @@ abstract class Payload implements \JsonSerializable
     /**
      * @return string
      */
-    abstract public function getRequestMethod(): string;
+    abstract public function getRequestUri(): string;
 
     /**
      * @return string
      */
-    abstract public function getRequestUri(): string;
+    final public function getRequestMethod(): string
+    {
+        return static::REQUEST_METHOD;
+    }
 }

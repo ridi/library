@@ -7,6 +7,8 @@ use Ridibooks\Store\Library\AccountCommandApiClient\Model\LibraryItemUpdateExpir
 
 class UpdateExpirationCommandPayload extends CommandPayload
 {
+    protected const REQUEST_METHOD = 'PUT';
+
     /** @var LibraryItemUpdateExpiration[] */
     private $books;
 
@@ -37,14 +39,6 @@ class UpdateExpirationCommandPayload extends CommandPayload
     public function getRequestUri(): string
     {
         return '/commands/items/expiration/';
-    }
-
-    /**
-     * @return string
-     */
-    public function getRequestMethod(): string
-    {
-        return 'PUT';
     }
 
     /**
