@@ -31,11 +31,6 @@ abstract class CommandPayload extends BasePayload
         $this->response_format = null;
     }
 
-    /**
-     * @return string
-     */
-    abstract public function getType(): string;
-
     public function setResponseTypeBids()
     {
         $this->response_format = self::RESPONSE_FORMAT_BIDS;

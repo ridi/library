@@ -23,6 +23,7 @@ class UpdateCommandPayload extends CommandPayload
     }
 
     /**
+     * @deprecated
      * @return string
      */
     public function getType(): string

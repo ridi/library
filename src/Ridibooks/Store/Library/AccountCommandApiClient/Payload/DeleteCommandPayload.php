@@ -21,6 +21,7 @@ class DeleteCommandPayload extends CommandPayload
     }
 
     /**
+     * @deprecated
      * @return string
      */
     public function getType(): string
