@@ -10,6 +10,9 @@ class DeleteCommandPayload extends CommandPayload
 {
     protected const REQUEST_METHOD = 'DELETE';
 
+    /** @var int */
+    private $priority;
+
     /** @var string[] */
     private $b_ids;
 
@@ -21,7 +24,8 @@ class DeleteCommandPayload extends CommandPayload
      */
     public function __construct(int $u_idx, int $revision, int $priority, array $b_ids)
     {
-        parent::__construct($u_idx, $revision, $priority);
+        parent::__construct($u_idx, $revision);
+        $this->priority = $priority;
         $this->b_ids = $b_ids;
     }
 
@@ -59,7 +63,7 @@ class DeleteCommandPayload extends CommandPayload
         $json = [
             'u_idx' => $this->getUidx(),
             'revision' => $this->getRevision(),
-            'priority' => $this->getPriority(),
+            'priority' => $this->priority,
             'b_ids' => $this->b_ids
         ];
         if (!is_null($this->getResponseFormat())) {

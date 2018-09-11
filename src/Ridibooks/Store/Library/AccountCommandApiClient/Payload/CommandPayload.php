@@ -17,21 +17,17 @@ abstract class CommandPayload extends BasePayload
     private $u_idx;
     /** @var int */
     private $revision;
-    /** @var int|null */
-    private $priority;
     /** @var string|null */
     private $response_format;
 
     /**
      * @param int $u_idx
      * @param int $revision
-     * @param int|null $priority
      */
-    public function __construct(int $u_idx, int $revision, ?int $priority = null)
+    public function __construct(int $u_idx, int $revision)
     {
         $this->u_idx = $u_idx;
         $this->revision = $revision;
-        $this->priority = $priority;
         $this->response_format = null;
     }
 
@@ -54,14 +50,6 @@ abstract class CommandPayload extends BasePayload
     public function getRevision(): int
     {
         return $this->revision;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getPriority(): ?int
-    {
-        return $this->priority;
     }
 
     /**

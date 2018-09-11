@@ -12,6 +12,9 @@ class UpdateCommandPayload extends CommandPayload
 {
     protected const REQUEST_METHOD = 'PUT';
 
+    /** @var int */
+    private $priority;
+
     /** @var LibraryItemFull[] */
     private $books;
 
@@ -23,7 +26,8 @@ class UpdateCommandPayload extends CommandPayload
      */
     public function __construct(int $u_idx, int $revision, int $priority, array $books)
     {
-        parent::__construct($u_idx, $revision, $priority);
+        parent::__construct($u_idx, $revision);
+        $this->priority = $priority;
         $this->books = $books;
     }
 
@@ -61,7 +65,7 @@ class UpdateCommandPayload extends CommandPayload
         $json = [
             'u_idx' => $this->getUidx(),
             'revision' => $this->getRevision(),
-            'priority' => $this->getPriority(),
+            'priority' => $this->priority,
             'books' => array_map(
                 function (LibraryItemFull $book): array {
                     return $book->jsonSerialize();

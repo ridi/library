@@ -9,6 +9,9 @@ class LibraryEventBookDownloadedCommand extends CommandPayload
 {
     protected const REQUEST_METHOD = 'PUT';
 
+    /** @var int|null */
+    private $priority;
+
     /** @var string[] */
     private $b_ids;
 
@@ -20,7 +23,8 @@ class LibraryEventBookDownloadedCommand extends CommandPayload
      */
     public function __construct(int $u_idx, int $revision, array $b_ids, ?int $priority = null)
     {
-        parent::__construct($u_idx, $revision, $priority);
+        parent::__construct($u_idx, $revision);
+        $this->priority = $priority;
         $this->b_ids = $b_ids;
     }
 
@@ -43,8 +47,8 @@ class LibraryEventBookDownloadedCommand extends CommandPayload
             'b_ids' => $this->b_ids
         ];
 
-        if ($this->getPriority() !== null) {
-            $json['priority'] = $this->getPriority();
+        if ($this->priority !== null) {
+            $json['priority'] = $this->priority;
         }
 
         if ($this->getResponseFormat() !== null) {
