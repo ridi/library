@@ -5,7 +5,6 @@ namespace Ridibooks\Store\Library\AccountCommandApiClient\Constant;
 
 class CommandTypeConstant
 {
-    // Type
     public const INSERT = 'INSERT';
     public const UPDATE = 'UPDATE';
     public const UPDATE_EXPIRATION = 'UPDATE_EXPIRATION';

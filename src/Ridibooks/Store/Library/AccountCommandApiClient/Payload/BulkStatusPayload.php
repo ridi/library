@@ -5,8 +5,13 @@ namespace Ridibooks\Store\Library\AccountCommandApiClient\Payload;
 
 use Ridibooks\Store\Library\BasePayload;
 
+/**
+ * @todo \Ridibooks\Store\Library\AccountCommandApiClient\Model\Command\LibraryCommandBulkStatus 로 이전
+ */
 class BulkStatusPayload extends BasePayload
 {
+    protected const REQUEST_METHOD = 'POST';
+
     /** @var int[] */
     private $queue_ids;
 
@@ -41,13 +46,5 @@ class BulkStatusPayload extends BasePayload
     public function getRequestUri(): string
     {
         return '/commands/items/queue/bulk/status';
-    }
-
-    /**
-     * @return string
-     */
-    public function getRequestMethod(): string
-    {
-        return 'POST';
     }
 }

@@ -5,8 +5,16 @@ namespace Ridibooks\Store\Library\AccountCommandApiClient\Payload;
 
 use Ridibooks\Store\Library\AccountCommandApiClient\Model\LibraryItemFull;
 
+/**
+ * @todo \Ridibooks\Store\Library\AccountCommandApiClient\Model\Command\LibraryUpdateCommand 로 이전
+ */
 class UpdateCommandPayload extends CommandPayload
 {
+    protected const REQUEST_METHOD = 'PUT';
+
+    /** @var int */
+    private $priority;
+
     /** @var LibraryItemFull[] */
     private $books;
 
@@ -18,11 +26,13 @@ class UpdateCommandPayload extends CommandPayload
      */
     public function __construct(int $u_idx, int $revision, int $priority, array $books)
     {
-        parent::__construct($u_idx, $revision, $priority);
+        parent::__construct($u_idx, $revision);
+        $this->priority = $priority;
         $this->books = $books;
     }
 
     /**
+     * @deprecated
      * @return string
      */
     public function getType(): string
@@ -33,9 +43,9 @@ class UpdateCommandPayload extends CommandPayload
     /**
      * @return string
      */
-    public function getRequestMethod(): string
+    public function getRequestUri(): string
     {
-        return 'PUT';
+        return '/commands/items/';
     }
 
     /**
@@ -55,7 +65,7 @@ class UpdateCommandPayload extends CommandPayload
         $json = [
             'u_idx' => $this->getUidx(),
             'revision' => $this->getRevision(),
-            'priority' => $this->getPriority(),
+            'priority' => $this->priority,
             'books' => array_map(
                 function (LibraryItemFull $book): array {
                     return $book->jsonSerialize();

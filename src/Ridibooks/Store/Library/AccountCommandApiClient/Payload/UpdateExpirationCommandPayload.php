@@ -5,8 +5,16 @@ namespace Ridibooks\Store\Library\AccountCommandApiClient\Payload;
 
 use Ridibooks\Store\Library\AccountCommandApiClient\Model\LibraryItemUpdateExpiration;
 
+/**
+ * @todo \Ridibooks\Store\Library\AccountCommandApiClient\Model\Command\LibraryUpdateExpirationCommand 로 이전
+ */
 class UpdateExpirationCommandPayload extends CommandPayload
 {
+    protected const REQUEST_METHOD = 'PUT';
+
+    /** @var int */
+    private $priority;
+
     /** @var LibraryItemUpdateExpiration[] */
     private $books;
 
@@ -18,11 +26,13 @@ class UpdateExpirationCommandPayload extends CommandPayload
      */
     public function __construct(int $u_idx, int $revision, int $priority, array $books)
     {
-        parent::__construct($u_idx, $revision, $priority);
+        parent::__construct($u_idx, $revision);
+        $this->priority = $priority;
         $this->books = $books;
     }
 
     /**
+     * @deprecated
      * @return string
      */
     public function getType(): string
@@ -39,14 +49,6 @@ class UpdateExpirationCommandPayload extends CommandPayload
     }
 
     /**
-     * @return string
-     */
-    public function getRequestMethod(): string
-    {
-        return 'PUT';
-    }
-
-    /**
      * @return array
      */
     public function jsonSerialize(): array
@@ -54,7 +56,7 @@ class UpdateExpirationCommandPayload extends CommandPayload
         $json = [
             'u_idx' => $this->getUidx(),
             'revision' => $this->getRevision(),
-            'priority' => $this->getPriority(),
+            'priority' => $this->priority,
             'books' => array_map(
                 function (LibraryItemUpdateExpiration $book): array {
                     return $book->jsonSerialize();
