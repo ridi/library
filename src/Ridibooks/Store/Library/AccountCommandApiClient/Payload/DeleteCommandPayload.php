@@ -43,6 +43,7 @@ class DeleteCommandPayload extends CommandPayload
     }
 
     /**
+     * @deprecated
      * @return string[]
      */
     public function getBIds(): array
@@ -59,7 +60,7 @@ class DeleteCommandPayload extends CommandPayload
             'u_idx' => $this->getUidx(),
             'revision' => $this->getRevision(),
             'priority' => $this->getPriority(),
-            'b_ids' => $this->getBIds()
+            'b_ids' => $this->b_ids
         ];
         if (!is_null($this->getResponseFormat())) {
             $json['response_formant'] = $this->getResponseFormat();
