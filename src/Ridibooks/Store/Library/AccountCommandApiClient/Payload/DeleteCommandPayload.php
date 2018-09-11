@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace Ridibooks\Store\Library\AccountCommandApiClient\Payload;
 
+/**
+ * @todo \Ridibooks\Store\Library\AccountCommandApiClient\Model\Command\LibraryDeleteCommand 로 이전
+ */
 class DeleteCommandPayload extends CommandPayload
 {
     protected const REQUEST_METHOD = 'DELETE';
@@ -29,6 +32,14 @@ class DeleteCommandPayload extends CommandPayload
     public function getType(): string
     {
         return 'delete';
+    }
+
+    /**
+     * @return string
+     */
+    public function getRequestUri(): string
+    {
+        return '/commands/items/';
     }
 
     /**

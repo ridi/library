@@ -5,6 +5,9 @@ namespace Ridibooks\Store\Library\AccountCommandApiClient\Payload;
 
 use Ridibooks\Store\Library\AccountCommandApiClient\Model\LibraryItemUpdateExpiration;
 
+/**
+ * @todo \Ridibooks\Store\Library\AccountCommandApiClient\Model\Command\LibraryUpdateExpirationCommand 로 이전
+ */
 class UpdateExpirationCommandPayload extends CommandPayload
 {
     protected const REQUEST_METHOD = 'PUT';

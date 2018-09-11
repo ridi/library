@@ -5,6 +5,7 @@ namespace Ridibooks\Store\Library\AccountCommandApiClient\Payload;
 
 /*
  * 모든 payload는 이 클래스를 상속받아야만 함
+ * @todo BulkStatusPayload가 CommandPayload를 상속받게 하고, 이 class의 내용을 CommandPayload로 옮긴 후에 이 class 제거
  */
 abstract class Payload implements \JsonSerializable
 {

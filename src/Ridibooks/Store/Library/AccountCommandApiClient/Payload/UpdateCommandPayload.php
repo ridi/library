@@ -5,6 +5,9 @@ namespace Ridibooks\Store\Library\AccountCommandApiClient\Payload;
 
 use Ridibooks\Store\Library\AccountCommandApiClient\Model\LibraryItemFull;
 
+/**
+ * @todo \Ridibooks\Store\Library\AccountCommandApiClient\Model\Command\LibraryUpdateCommand 로 이전
+ */
 class UpdateCommandPayload extends CommandPayload
 {
     protected const REQUEST_METHOD = 'PUT';
@@ -31,6 +34,14 @@ class UpdateCommandPayload extends CommandPayload
     public function getType(): string
     {
         return 'update';
+    }
+
+    /**
+     * @return string
+     */
+    public function getRequestUri(): string
+    {
+        return '/commands/items/';
     }
 
     /**

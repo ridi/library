@@ -5,6 +5,10 @@ namespace Ridibooks\Store\Library\AccountCommandApiClient\Payload;
 
 use Ridibooks\Store\Library\BasePayload;
 
+/**
+ * @todo CommandPayload 라는 용어를 제거하고 Command로 변경
+ * @todo \Ridibooks\Store\Library\AccountCommandApiClient\Model\Command\Command 로 이전
+ */
 abstract class CommandPayload extends BasePayload
 {
     private const RESPONSE_FORMAT_BIDS = 'b_ids';
@@ -13,7 +17,7 @@ abstract class CommandPayload extends BasePayload
     private $u_idx;
     /** @var int */
     private $revision;
-    /** @var int */
+    /** @var int|null */
     private $priority;
     /** @var string|null */
     private $response_format;
@@ -21,9 +25,9 @@ abstract class CommandPayload extends BasePayload
     /**
      * @param int $u_idx
      * @param int $revision
-     * @param int $priority
+     * @param int|null $priority
      */
-    public function __construct(int $u_idx, int $revision, int $priority)
+    public function __construct(int $u_idx, int $revision, ?int $priority = null)
     {
         $this->u_idx = $u_idx;
         $this->revision = $revision;
@@ -34,14 +38,6 @@ abstract class CommandPayload extends BasePayload
     public function setResponseTypeBids()
     {
         $this->response_format = self::RESPONSE_FORMAT_BIDS;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRequestUri(): string
-    {
-        return '/commands/items/';
     }
 
     /**
@@ -61,9 +57,9 @@ abstract class CommandPayload extends BasePayload
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getPriority(): int
+    public function getPriority(): ?int
     {
         return $this->priority;
     }
