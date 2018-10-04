@@ -3,12 +3,10 @@ declare(strict_types=1);
 
 namespace Ridibooks\Store\Library\AccountCommandApiClient\Payload;
 
-use Ridibooks\Store\Library\BasePayload;
-
 /**
  * @todo \Ridibooks\Store\Library\AccountCommandApiClient\Model\Command\LibraryCommandBulkStatus 로 이전
  */
-class BulkStatusPayload extends BasePayload
+class BulkStatusPayload extends Payload
 {
     protected const REQUEST_METHOD = 'POST';
 
