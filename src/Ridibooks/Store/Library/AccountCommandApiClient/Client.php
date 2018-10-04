@@ -6,6 +6,7 @@ namespace Ridibooks\Store\Library\AccountCommandApiClient;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\RequestOptions;
 use Ridibooks\Store\Library\AccountCommandApiClient\Payload\Payload;
 
 class Client
@@ -29,28 +30,24 @@ class Client
 
     /**
      * @param Payload $payload
+     * @param array $options (RequestOptions::X => Y)[]
      * @return PromiseInterface
      */
-    public function sendCommandAsync(Payload $payload): PromiseInterface
+    public function sendCommandAsync(Payload $payload, array $options = []): PromiseInterface
     {
-        $promise = $this->client->requestAsync(
-            $payload->getRequestMethod(),
-            $payload->getRequestUri(),
-            ['json' => $payload,]
-        );
+        $options[RequestOptions::JSON] = $payload;
 
-        return $promise;
+        return $this->client->requestAsync($payload->getRequestMethod(), $payload->getRequestUri(), $options);
     }
 
     /**
      * @param Payload $payload
+     * @param array $options (RequestOptions::X => Y)[]
      * @return Response
      * @throws \LogicException
      */
-    public function sendCommand(Payload $payload): Response
+    public function sendCommand(Payload $payload, array $options = []): Response
     {
-        $promise = $this->sendCommandAsync($payload);
-
-        return $promise->wait();
+        return $this->sendCommandAsync($payload, $options)->wait();
     }
 }
