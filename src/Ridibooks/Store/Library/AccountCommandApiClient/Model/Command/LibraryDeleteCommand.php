@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace Ridibooks\Store\Library\AccountCommandApiClient\Model\Command;
 
-class LibraryEventBookDownloadedCommand extends UserCommand
+class LibraryDeleteCommand extends UserCommand
 {
-    protected const REQUEST_METHOD = 'PUT';
-    protected const REQUEST_PATH = '/events/book-downloaded/';
+    protected const REQUEST_METHOD = 'DELETE';
 
     /** @var string[] */
     private $b_ids;
@@ -14,8 +13,8 @@ class LibraryEventBookDownloadedCommand extends UserCommand
     /**
      * @param int $u_idx
      * @param int $revision
-     * @param string[] $b_ids
      * @param int $priority
+     * @param string[] $b_ids
      */
     public function __construct(int $u_idx, int $revision, int $priority, array $b_ids)
     {
