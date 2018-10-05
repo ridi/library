@@ -41,7 +41,7 @@ abstract class UserCommand extends Command
             'revision' => $this->revision,
             'priority' => $this->priority
         ];
-        if (!is_null($this->is_response_format_b_ids)) {
+        if ($this->is_response_format_b_ids) {
             $json['response_format'] = 'b_ids';
         }
 
