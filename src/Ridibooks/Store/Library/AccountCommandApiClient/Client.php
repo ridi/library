@@ -8,11 +8,11 @@ use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\RequestOptions;
-use Ridibooks\Store\Library\AccountCommandApiClient\Payload\Payload;
+use Ridibooks\Store\Library\AccountCommandApiClient\Model\Command\Command;
 
 class Client
 {
-    public const JWT_EXPIRATION_TIME_OPTION = 'option: JWT expiration time';
+    public const JWT_EXPIRATION_TIME_OPTION = 'opt: JWT EXP';
 
     private const DEFAULT_ACCOUNT_SERVER_URI = 'https://library-api.ridibooks.com';
 
@@ -42,11 +42,11 @@ class Client
     }
 
     /**
-     * @param Payload $payload
+     * @param Command $command
      * @param array $options
      * @return PromiseInterface
      */
-    public function sendCommandAsync(Payload $payload, array $options = []): PromiseInterface
+    public function sendCommandAsync(Command $command, array $options = []): PromiseInterface
     {
         if (isset($options[self::JWT_EXPIRATION_TIME_OPTION])) {
             $jwt_expiration_time = $options[self::JWT_EXPIRATION_TIME_OPTION];
@@ -65,19 +65,19 @@ class Client
             'Authorization' => 'Bearer ' . JWT::encode($jwt_payload, $this->jwt_private_key, 'RS256'),
             'Accept' => 'application/json',
         ];
-        $options[RequestOptions::JSON] = $payload;
+        $options[RequestOptions::JSON] = $command;
 
-        return $this->client->requestAsync($payload->getRequestMethod(), $payload->getRequestUri(), $options);
+        return $this->client->requestAsync($command->getRequestMethod(), $command->getRequestUri(), $options);
     }
 
     /**
-     * @param Payload $payload
+     * @param Command $command
      * @param array $options (RequestOptions::X => Y)[]
      * @return Response
      * @throws \LogicException
      */
-    public function sendCommand(Payload $payload, array $options = []): Response
+    public function sendCommand(Command $command, array $options = []): Response
     {
-        return $this->sendCommandAsync($payload, $options)->wait();
+        return $this->sendCommandAsync($command, $options)->wait();
     }
 }

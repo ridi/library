@@ -3,24 +3,25 @@ declare(strict_types=1);
 
 namespace Ridibooks\Store\Library\AccountCommandApiClient\Model\Command;
 
-class LibraryEventBookDownloadedCommand extends UserCommand
+use Ridibooks\Store\Library\AccountCommandApiClient\Model\LibraryItemFull;
+
+class LibraryUpdateCommand extends UserCommand
 {
     protected const REQUEST_METHOD = 'PUT';
-    protected const REQUEST_PATH = '/events/book-downloaded/';
 
-    /** @var string[] */
-    private $b_ids;
+    /** @var LibraryItemFull[] */
+    private $books;
 
     /**
      * @param int $u_idx
      * @param int $revision
-     * @param string[] $b_ids
      * @param int $priority
+     * @param LibraryItemFull[] $books
      */
-    public function __construct(int $u_idx, int $revision, int $priority, array $b_ids)
+    public function __construct(int $u_idx, int $revision, int $priority, array $books)
     {
         parent::__construct($u_idx, $revision, $priority);
-        $this->b_ids = $b_ids;
+        $this->books = $books;
     }
 
     /**
@@ -28,6 +29,6 @@ class LibraryEventBookDownloadedCommand extends UserCommand
      */
     protected function serialize(): array
     {
-        return ['b_ids' => $this->b_ids];
+        return ['books' => $this->serializeItems($this->books)];
     }
 }
