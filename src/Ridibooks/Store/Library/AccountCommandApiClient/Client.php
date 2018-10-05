@@ -48,23 +48,13 @@ class Client
      */
     public function sendCommandAsync(Command $command, array $options = []): PromiseInterface
     {
+        $jwt = $this->createJwt($options[self::JWT_EXPIRATION_TIME_OPTION] ?? $this->default_jwt_expiration_time);
+
         if (isset($options[self::JWT_EXPIRATION_TIME_OPTION])) {
-            $jwt_expiration_time = $options[self::JWT_EXPIRATION_TIME_OPTION];
             unset($options[self::JWT_EXPIRATION_TIME_OPTION]);
-        } else {
-            $jwt_expiration_time = $this->default_jwt_expiration_time;
         }
 
-        $jwt_payload = [
-            'iss' => 'user-book',
-            'exp' => (new \DateTime("+$jwt_expiration_time seconds"))->getTimestamp(),
-            'aud' => 'library',
-        ];
-
-        $options[RequestOptions::HEADERS] = [
-            'Authorization' => 'Bearer ' . JWT::encode($jwt_payload, $this->jwt_private_key, 'RS256'),
-            'Accept' => 'application/json',
-        ];
+        $options[RequestOptions::HEADERS] = ['Authorization' => "Bearer $jwt", 'Accept' => 'application/json'];
         $options[RequestOptions::JSON] = $command;
 
         return $this->client->requestAsync($command->getRequestMethod(), $command->getRequestUri(), $options);
@@ -79,5 +69,20 @@ class Client
     public function sendCommand(Command $command, array $options = []): Response
     {
         return $this->sendCommandAsync($command, $options)->wait();
+    }
+
+    /**
+     * @param int $expiration_time in seconds
+     * @return string
+     */
+    private function createJwt(int $expiration_time): string
+    {
+        $payload = [
+            'iss' => 'user-book',
+            'aud' => 'library',
+            'exp' => (new \DateTime("+$expiration_time seconds"))->getTimestamp()
+        ];
+
+        return JWT::encode($payload, $this->jwt_private_key, 'RS256');
     }
 }
