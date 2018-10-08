@@ -77,11 +77,7 @@ class Client
      */
     private function createJwt(int $expiration_time): string
     {
-        $payload = [
-            'iss' => 'user-book',
-            'aud' => 'library',
-            'exp' => (new \DateTime("+$expiration_time seconds"))->getTimestamp()
-        ];
+        $payload = ['iss' => 'user-book', 'aud' => 'library', 'exp' => time() + $expiration_time];
 
         return JWT::encode($payload, $this->jwt_private_key, 'RS256');
     }
