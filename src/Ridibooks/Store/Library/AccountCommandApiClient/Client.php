@@ -6,9 +6,11 @@ namespace Ridibooks\Store\Library\AccountCommandApiClient;
 use Firebase\JWT\JWT;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Promise\PromiseInterface;
+use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\RequestOptions;
 use Ridibooks\Store\Library\AccountCommandApiClient\Model\Command\Command;
+use Ridibooks\Store\Library\AccountCommandApiClient\Service\LibraryActionService;
 
 class Client
 {
@@ -39,6 +41,37 @@ class Client
         }
         $this->client = new GuzzleClient($config);
         $this->jwt_private_key = $jwt_private_key;
+    }
+
+    /**
+     * @param LibraryAction $library_action
+     * @param array $options
+     * @return PromiseInterface
+     * @throws \InvalidArgumentException
+     */
+    public function sendLibraryActionAsync(LibraryAction $library_action, array $options = []): PromiseInterface
+    {
+        try {
+            $user_command = LibraryActionService::createCommand($library_action);
+        } catch (\Throwable $e) {
+            return new RejectedPromise($e);
+        }
+
+        return $this->sendCommandAsync($user_command, $options);
+    }
+
+    /**
+     * @param LibraryAction $library_action
+     * @param array $options
+     * @return Response
+     * @throws Exception\LibraryItemCountException
+     * @throws Exception\LibraryItemFetchingException
+     * @throws Exception\UndefinedTypeException
+     * @throws \LogicException
+     */
+    public function sendLibraryAction(LibraryAction $library_action, array $options = []): Response
+    {
+        return $this->sendCommand(LibraryActionService::createCommand($library_action), $options);
     }
 
     /**
