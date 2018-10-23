@@ -106,6 +106,7 @@ class Client
      */
     public function sendCommand(Command $command, array $options = []): Response
     {
+        $options[RequestOptions::SYNCHRONOUS] = true;
         return $this->sendCommandAsync($command, $options)->wait();
     }
 
