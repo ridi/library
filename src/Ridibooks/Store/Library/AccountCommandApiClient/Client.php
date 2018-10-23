@@ -8,13 +8,13 @@ use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\RequestOptions;
 use Ridibooks\Store\Library\AccountCommandApiClient\Model\Command\Command;
 use Ridibooks\Store\Library\AccountCommandApiClient\Service\LibraryActionService;
 
 class Client
 {
-    public const JWT_EXPIRATION_TIME_OPTION = 'opt: JWT EXP';
+    /** @deprecated Use RequestOptions::JWT_EXPIRATION_TIME */
+    public const JWT_EXPIRATION_TIME_OPTION = RequestOptions::JWT_EXPIRATION_TIME;
 
     private const DEFAULT_ACCOUNT_SERVER_URI = 'https://library-api.ridibooks.com';
 
@@ -22,8 +22,11 @@ class Client
     private $client;
     /** @var string */
     private $jwt_private_key;
-    /** @var int */
-    private $default_jwt_expiration_time = 300;
+
+    /** @var array */
+    private $default_options = [
+        RequestOptions::JWT_EXPIRATION_TIME => 300,
+    ];
 
     /**
      * @param string $jwt_private_key
@@ -35,9 +38,9 @@ class Client
         if (!isset($config['base_uri'])) {
             $config['base_uri'] = self::DEFAULT_ACCOUNT_SERVER_URI;
         }
-        if (isset($config[self::JWT_EXPIRATION_TIME_OPTION])) {
-            $this->default_jwt_expiration_time = $config[self::JWT_EXPIRATION_TIME_OPTION];
-            unset($config[self::JWT_EXPIRATION_TIME_OPTION]);
+        if (isset($config[RequestOptions::JWT_EXPIRATION_TIME])) {
+            $this->default_options[RequestOptions::JWT_EXPIRATION_TIME] = $config[RequestOptions::JWT_EXPIRATION_TIME];
+            unset($config[RequestOptions::JWT_EXPIRATION_TIME]);
         }
         $this->client = new GuzzleClient($config);
         $this->jwt_private_key = $jwt_private_key;
@@ -81,10 +84,12 @@ class Client
      */
     public function sendCommandAsync(Command $command, array $options = []): PromiseInterface
     {
-        $jwt = $this->createJwt($options[self::JWT_EXPIRATION_TIME_OPTION] ?? $this->default_jwt_expiration_time);
+        $jwt = $this->createJwt(
+            $options[RequestOptions::JWT_EXPIRATION_TIME] ?? $this->default_options[RequestOptions::JWT_EXPIRATION_TIME]
+        );
 
-        if (isset($options[self::JWT_EXPIRATION_TIME_OPTION])) {
-            unset($options[self::JWT_EXPIRATION_TIME_OPTION]);
+        if (isset($options[RequestOptions::JWT_EXPIRATION_TIME])) {
+            unset($options[RequestOptions::JWT_EXPIRATION_TIME]);
         }
 
         $options[RequestOptions::HEADERS] = ['Authorization' => "Bearer $jwt", 'Accept' => 'application/json'];
