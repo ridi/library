@@ -41,4 +41,15 @@ final class RequestOptions
      * jwt_expiration_time: (int) The amount of time after which JWT will be expired in seconds.
      */
     public const JWT_EXPIRATION_TIME = 'jwt_expiration_time';
+
+    /**
+     * response_type_b_ids: (bool) Set to true to use b_ids as response format.
+     */
+    public const RESPONSE_TYPE_B_IDS = 'response_type_b_ids';
+
+    /** @var string[] */
+    public const LIBRARY_OPTIONS = [
+        self::JWT_EXPIRATION_TIME,
+        self::RESPONSE_TYPE_B_IDS,
+    ];
 }

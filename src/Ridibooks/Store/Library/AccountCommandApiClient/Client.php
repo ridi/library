@@ -9,6 +9,7 @@ use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Response;
 use Ridibooks\Store\Library\AccountCommandApiClient\Model\Command\Command;
+use Ridibooks\Store\Library\AccountCommandApiClient\Model\Command\UserCommand;
 use Ridibooks\Store\Library\AccountCommandApiClient\Service\LibraryActionService;
 
 class Client
@@ -26,6 +27,7 @@ class Client
     /** @var array */
     private $default_options = [
         RequestOptions::JWT_EXPIRATION_TIME => 300,
+        RequestOptions::RESPONSE_TYPE_B_IDS => false,
     ];
 
     /**
@@ -38,9 +40,11 @@ class Client
         if (!isset($config['base_uri'])) {
             $config['base_uri'] = self::DEFAULT_ACCOUNT_SERVER_URI;
         }
-        if (isset($config[RequestOptions::JWT_EXPIRATION_TIME])) {
-            $this->default_options[RequestOptions::JWT_EXPIRATION_TIME] = $config[RequestOptions::JWT_EXPIRATION_TIME];
-            unset($config[RequestOptions::JWT_EXPIRATION_TIME]);
+        foreach (RequestOptions::LIBRARY_OPTIONS as $library_option_name) {
+            if (isset($config[$library_option_name])) {
+                $this->default_options[$library_option_name] = $config[$library_option_name];
+                unset($config[$library_option_name]);
+            }
         }
         $this->client = new GuzzleClient($config);
         $this->jwt_private_key = $jwt_private_key;
@@ -84,12 +88,19 @@ class Client
      */
     public function sendCommandAsync(Command $command, array $options = []): PromiseInterface
     {
-        $jwt = $this->createJwt(
-            $options[RequestOptions::JWT_EXPIRATION_TIME] ?? $this->default_options[RequestOptions::JWT_EXPIRATION_TIME]
-        );
+        $jwt = $this->createJwt($this->getOption($options, RequestOptions::JWT_EXPIRATION_TIME));
 
-        if (isset($options[RequestOptions::JWT_EXPIRATION_TIME])) {
-            unset($options[RequestOptions::JWT_EXPIRATION_TIME]);
+        if ($this->getOption($options, RequestOptions::RESPONSE_TYPE_B_IDS)) {
+            if ($command instanceof UserCommand) {
+                $command->setResponseTypeBids();
+            }
+            unset($options[RequestOptions::RESPONSE_TYPE_B_IDS]);
+        }
+
+        foreach (RequestOptions::LIBRARY_OPTIONS as $library_option_name) {
+            if (isset($options[$library_option_name])) {
+                unset($options[$library_option_name]);
+            }
         }
 
         $options[RequestOptions::HEADERS] = ['Authorization' => "Bearer $jwt", 'Accept' => 'application/json'];
@@ -108,6 +119,16 @@ class Client
     {
         $options[RequestOptions::SYNCHRONOUS] = true;
         return $this->sendCommandAsync($command, $options)->wait();
+    }
+
+    /**
+     * @param array $options
+     * @param string $option_name RequestOptions
+     * @return mixed
+     */
+    private function getOption(array $options, string $option_name)
+    {
+        return $options[$option_name] ?? $this->default_options[$option_name];
     }
 
     /**
