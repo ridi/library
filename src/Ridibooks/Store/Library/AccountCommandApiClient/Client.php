@@ -8,6 +8,7 @@ use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Promise\PromiseInterface;
 use GuzzleHttp\Promise\RejectedPromise;
 use GuzzleHttp\Psr7\Response;
+use Ridibooks\Store\Library\AccountCommandApiClient\Exception\RequestException;
 use Ridibooks\Store\Library\AccountCommandApiClient\Model\Command\Command;
 use Ridibooks\Store\Library\AccountCommandApiClient\Model\Command\UserCommand;
 use Ridibooks\Store\Library\AccountCommandApiClient\Service\LibraryActionService;
@@ -71,19 +72,22 @@ class Client
      * @param LibraryAction $library_action
      * @param array $options
      * @return Response
-     * @throws Exception\LibraryItemCountException
-     * @throws Exception\LibraryItemFetchingException
-     * @throws Exception\UndefinedTypeException
+     * @throws RequestException
      * @throws \LogicException
      */
     public function sendLibraryAction(LibraryAction $library_action, array $options = []): Response
     {
-        return $this->sendCommand(LibraryActionService::createCommand($library_action), $options);
+        try {
+            $user_command = LibraryActionService::createCommand($library_action);
+        } catch (\Throwable $e) {
+            throw new RequestException($e, null);
+        }
+        return $this->sendCommand($user_command, $options);
     }
 
     /**
      * @param Command $command
-     * @param array $options
+     * @param array $options (RequestOptions::X => Y)[]
      * @return PromiseInterface
      */
     public function sendCommandAsync(Command $command, array $options = []): PromiseInterface
@@ -106,19 +110,29 @@ class Client
         $options[RequestOptions::HEADERS] = ['Authorization' => "Bearer $jwt", 'Accept' => 'application/json'];
         $options[RequestOptions::JSON] = $command;
 
-        return $this->client->requestAsync($command->getRequestMethod(), $command->getRequestUri(), $options);
+        return $this->client->requestAsync($command->getRequestMethod(), $command->getRequestUri(), $options)
+            ->otherwise(
+                function (\Exception $e) use ($command) {
+                    throw new RequestException($e, $command);
+                }
+            );
     }
 
     /**
      * @param Command $command
-     * @param array $options (RequestOptions::X => Y)[]
+     * @param array $options
      * @return Response
+     * @throws RequestException
      * @throws \LogicException
      */
     public function sendCommand(Command $command, array $options = []): Response
     {
         $options[RequestOptions::SYNCHRONOUS] = true;
-        return $this->sendCommandAsync($command, $options)->wait();
+        try {
+            return $this->sendCommandAsync($command, $options)->wait();
+        } catch (RequestException $e) {
+            throw $e;
+        }
     }
 
     /**
