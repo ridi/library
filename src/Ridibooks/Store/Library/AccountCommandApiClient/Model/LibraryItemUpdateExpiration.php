@@ -39,9 +39,11 @@ class LibraryItemUpdateExpiration implements \JsonSerializable
      */
     public static function createFromLibraryItem(LibraryItem $library_item): self
     {
+        $is_expiration_update_by_user = !$library_item->isRidiSelectBook();
+
         return new self(
             $library_item->getBid(),
-            !$library_item->isRidiSelectBook(),
+            $is_expiration_update_by_user,
             $library_item->getServiceType(),
             $library_item->getExpireDate()
         );
