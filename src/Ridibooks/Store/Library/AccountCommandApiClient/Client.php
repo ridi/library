@@ -98,7 +98,6 @@ class Client
             if ($command instanceof UserCommand) {
                 $command->setResponseTypeBids();
             }
-            unset($options[RequestOptions::RESPONSE_TYPE_B_IDS]);
         }
 
         foreach (RequestOptions::LIBRARY_OPTIONS as $library_option_name) {
