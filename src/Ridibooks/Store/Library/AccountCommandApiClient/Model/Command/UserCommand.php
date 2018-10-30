@@ -26,9 +26,13 @@ abstract class UserCommand extends Command
         $this->priority = $priority;
     }
 
-    final public function setResponseTypeBids(): void
+    /**
+     * @return UserCommand
+     */
+    final public function setResponseTypeBids(): self
     {
         $this->is_response_format_b_ids = true;
+        return $this;
     }
 
     /**

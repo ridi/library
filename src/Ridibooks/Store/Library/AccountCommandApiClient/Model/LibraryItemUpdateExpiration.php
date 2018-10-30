@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Ridibooks\Store\Library\AccountCommandApiClient\Model;
 
+use Ridibooks\Store\Library\AccountCommandApiClient\LibraryItem;
+
 class LibraryItemUpdateExpiration implements \JsonSerializable
 {
     /** @var string */
@@ -29,6 +31,22 @@ class LibraryItemUpdateExpiration implements \JsonSerializable
         $this->by_user = $by_user;
         $this->service_type = $service_type;
         $this->expiration_date = $expiration_date->setTimezone(new \DateTimeZone('Asia/Seoul'));
+    }
+
+    /**
+     * @param LibraryItem $library_item
+     * @return self
+     */
+    public static function createFromLibraryItem(LibraryItem $library_item): self
+    {
+        $is_expiration_update_by_user = !$library_item->isRidiSelectBook();
+
+        return new self(
+            $library_item->getBid(),
+            $is_expiration_update_by_user,
+            $library_item->getServiceType(),
+            $library_item->getExpireDate()
+        );
     }
 
     /**

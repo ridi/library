@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Ridibooks\Store\Library\AccountCommandApiClient\Model;
 
+use Ridibooks\Store\Library\AccountCommandApiClient\LibraryItem;
+
 class LibraryItemFull implements \JsonSerializable
 {
     /** @var string */
@@ -52,6 +54,23 @@ class LibraryItemFull implements \JsonSerializable
         $this->is_canceled = $is_canceled;
         $this->is_user_deleted = $is_user_deleted;
         $this->is_deleted = $is_deleted;
+    }
+
+    /**
+     * @param LibraryItem $library_item
+     * @return self
+     */
+    public static function createFromLibraryItem(LibraryItem $library_item): self
+    {
+        return new self(
+            $library_item->getBid(),
+            $library_item->getServiceType(),
+            $library_item->getExpireDate(),
+            $library_item->getRegDate(),
+            $library_item->isCanceled(),
+            $library_item->isDeletedByUser(),
+            $library_item->isDeleted()
+        );
     }
 
     /**
