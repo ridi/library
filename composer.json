@@ -8,7 +8,7 @@
       "email": "heechan@ridi.com"
     }
   ],
-  "license": "proprietary",
+  "license": "MIT",
   "autoload": {
     "psr-4": {
       "Ridibooks\\Store\\Library\\": "src/Ridibooks/Store/Library"
