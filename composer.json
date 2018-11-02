@@ -1,6 +1,6 @@
 {
   "name": "ridibooks/store-account-client",
-  "description": "계정팀 API 클라이언트",
+  "description": "RIDI Library Command Client",
   "type": "library",
   "authors": [
     {
