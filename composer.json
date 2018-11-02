@@ -4,8 +4,14 @@
   "type": "library",
   "authors": [
     {
-      "name": "양희찬",
-      "email": "heechan@ridi.com"
+      "name": "스토어팀 백엔드 파트",
+      "email": "backend.part@ridi.com",
+      "role": "owner"
+    },
+    {
+      "name": "이상국",
+      "email": "luan@ridi.com",
+      "role": "maintainer"
     }
   ],
   "license": "MIT",
