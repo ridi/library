@@ -1,6 +1,6 @@
 {
-  "name": "ridi/library-command",
-  "description": "RIDI Library Command Client",
+  "name": "ridi/library",
+  "description": "RIDI Library Client",
   "type": "library",
   "authors": [
     {

@@ -1,6 +1,6 @@
-RIDI Library Command Client
+RIDI Library Client
 =======
 
-You can send command to RIDI Library with this client.
+You can use RIDI Library with this client.
 
 [API Documentation](https://library-api.dev.ridi.io/docs/swagger/)
