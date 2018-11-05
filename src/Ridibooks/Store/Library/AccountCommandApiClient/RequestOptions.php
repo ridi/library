@@ -38,12 +38,12 @@ final class RequestOptions
     public const FORCE_IP_RESOLVE = GuzzleRequestOptions::FORCE_IP_RESOLVE;
 
     /**
-     * jwt_expiration_time: (int) The amount of time after which JWT will be expired in seconds.
+     * jwt_expiration_time: (int, default=300) The amount of time after which JWT will be expired in seconds.
      */
     public const JWT_EXPIRATION_TIME = 'jwt_expiration_time';
 
     /**
-     * response_type_b_ids: (bool) Set to true to use b_ids as response format.
+     * response_type_b_ids: (bool, default=false) Set to true to use b_ids as response format.
      */
     public const RESPONSE_TYPE_B_IDS = 'response_type_b_ids';
 

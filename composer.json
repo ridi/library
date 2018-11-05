@@ -1,14 +1,20 @@
 {
-  "name": "ridibooks/store-account-client",
-  "description": "계정팀 API 클라이언트",
+  "name": "ridibooks/library-command",
+  "description": "RIDI Library Command Client",
   "type": "library",
   "authors": [
     {
-      "name": "양희찬",
-      "email": "heechan@ridi.com"
+      "name": "스토어팀 백엔드 파트",
+      "email": "backend.part@ridi.com",
+      "role": "owner"
+    },
+    {
+      "name": "이상국",
+      "email": "luan@ridi.com",
+      "role": "maintainer"
     }
   ],
-  "license": "proprietary",
+  "license": "MIT",
   "autoload": {
     "psr-4": {
       "Ridibooks\\Store\\Library\\": "src/Ridibooks/Store/Library"
