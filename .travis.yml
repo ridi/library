@@ -1,0 +1,17 @@
+language: php
+cache:
+  directories:
+  - "$HOME/.composer/cache"
+install:
+- composer install
+stages:
+- test
+jobs:
+  include:
+  - php: 7.1
+    stage: test
+    name: phpcs
+    script: vendor/bin/phpcs --standard=./ruleset.xml
+notifications:
+  slack:
+    secure: UQgFuIc534r4FNrnUtMUckPyl5WBSNM70q7wS0uqxIgVpaHbuGCEJEw4K4At7dvIhkqpsHPP6u9XiKivPm9WZLVi0NvLyGeYrk043G5AvVQ9xXezUR6j/lTyChm2tKs7rBKlt5uhU5ItW05MSOVKsKeVgBzlCMR5FxVwZPO81T4LL5fu0/r252+6yY1D75r0ZkAec5S4T21TQxYYwkv748wmtu25tpOPcdxeiOcAXAQQUiVFNS2F6eEwJ28P4f3Ny7HrXO325VI2C6mItThn8rewQgRYT7Sr6Qgcgs4rNxwUqcWlyZvAw7bRMrEGHcxK3JhjA5e9XfSeBOz/EfE2xbtsBk11NuSUJbFvRVipd4p4wggyT1YEO8FpfwCz4I7+9Se9+jSOjY1KtKncLTGnmWyWsLjevsnjifMDpd07QalC5DVoEtcyj+kp+m73rEtrqT2/VryEaKLOD3lDaPK+w9Gm8BJYPFAYNgp7HoEiNTSlzOJhmLvN64zYbOsSXxVKPJAN8RMfkd2kLNwU5YX1rhI/5Xgheu40c4zJfTe6M0xhYuEYrZ4NT4q5d+7Vja33Efyot7OSG+U2IidDqX7GqBa4/3y+W9rWQUZcGsAHu0fYyMGn0eP+cODaRY0mU7kBEA/JdUIy6J//KIGeg3zGGui/ENzbpWtlQc/EGglcucw=
